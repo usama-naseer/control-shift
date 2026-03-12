@@ -1,0 +1,223 @@
+# Dependencies
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.pnpm-store
+
+# Build outputs
+dist
+dist-ssr
+build
+out
+.output
+.vercel
+.netlify
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage
+*.lcov
+.nyc_output
+
+# Logs
+logs
+*.log
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+
+# Cache directories
+.cache
+.parcel-cache
+.next
+.nuxt
+.vuepress/dist
+.serverless
+.fusebox/
+.dynamodb/
+.tern-port
+
+# Vite specific
+*.local
+.vite-temp
+.vite
+
+# Tailwind CSS
+.tailwindcss-cache
+
+# Testing
+/coverage
+/.nyc_output
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.idea
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Windows specific
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+.temp/
+
+# Package manager lock files (keep package-lock.json but ignore others if switching)
+# yarn.lock
+# pnpm-lock.yaml
+
+# Storybook build outputs
+storybook-static
+
+# TypeScript
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env.test
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# Temporary folders
+tmp/
+temp/
+
+# IDE - VSCode
+.history/*
+
+# IDE - WebStorm
+.idea/
+
+# IDE - Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Documentation build
+docs/build/
+
+# Local development
+.local
+
+# Sentry
+.sentryclirc
+
+# Firebase
+.firebase/
+firebase-debug.log
+firestore-debug.log
+
+# Vercel
+.vercel
+
+# Netlify
+.netlify
+
+# AWS
+.aws-sam/
+
+# Serverless Framework
+.serverless/
+
+# FuseBox
+.fusebox/
+
+# DynamoDB Local files
+.dynamodb/
+
+# TernJS port file
+.tern-port
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# Cypress
+cypress/videos/
+cypress/screenshots/
+
+# Percy
+percy/
+
+# Chromatic
+chromatic-build/
+
+# Storybook
+storybook-static/
+
+# Temporary files created by editors
+.#*
+\#*#
+*#
+.#*
+
+# Lock files for different package managers (uncomment if needed)
+# yarn.lock
+# pnpm-lock.yaml
+
+# Project specific ignores
+RESPONSIVE_OPTIMIZATION.md
