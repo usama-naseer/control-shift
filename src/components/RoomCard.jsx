@@ -1,4 +1,4 @@
-// RoomCard.jsx - Enhanced with Custom CSS
+// RoomCard.jsx - Enhanced with Counter Logic
 
 import { motion } from 'framer-motion';
 import './RoomCard.css';
@@ -6,20 +6,17 @@ import './RoomCard.css';
 const RoomCard = ({ 
   room, 
   count = 0, 
-  isSelected = false, 
-  onSelect, 
-  onCountChange 
+  onIncrement,
+  onDecrement
 }) => {
   const handleIncrement = (e) => {
     e.stopPropagation();
-    onCountChange(room.id, count + 1);
+    onIncrement(room.id);
   };
 
   const handleDecrement = (e) => {
     e.stopPropagation();
-    if (count > 0) {
-      onCountChange(room.id, count - 1);
-    }
+    onDecrement(room.id);
   };
 
   // All cards have the same styling with blue borders
@@ -28,7 +25,6 @@ const RoomCard = ({
   return (
     <motion.div
       className={cardClass}
-      onClick={() => onSelect(room.id)}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
       transition={{ type: "spring", stiffness: 400, damping: 17 }}
@@ -38,9 +34,39 @@ const RoomCard = ({
           {room.icon}
         </span>
         
-        {/* Always show blue counter, either with count or + */}
-        <div className={`room-counter ${count > 0 ? 'selected' : 'add-button'}`}>
-          {count > 0 ? count : '+'}
+        {/* Counter with increment/decrement logic */}
+        <div className="room-counter-container">
+          {count === 0 ? (
+            // Only show + button when count is 0
+            <button 
+              className="room-counter add-button"
+              onClick={handleIncrement}
+              aria-label={`Add ${room.label}`}
+            >
+              +
+            </button>
+          ) : (
+            // Show - count + when count > 0
+            <div className="room-counter-group">
+              <button 
+                className="room-counter-btn decrement"
+                onClick={handleDecrement}
+                aria-label={`Remove ${room.label}`}
+              >
+                −
+              </button>
+              <span className="room-counter selected">
+                {count}
+              </span>
+              <button 
+                className="room-counter-btn increment"
+                onClick={handleIncrement}
+                aria-label={`Add ${room.label}`}
+              >
+                +
+              </button>
+            </div>
+          )}
         </div>
       </div>
       

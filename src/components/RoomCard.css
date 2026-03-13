@@ -4,13 +4,13 @@
   display: flex;
   flex-direction: column;
   gap: var(--gap-xs);
-  padding: 1.25rem;
+  padding: 1rem; /* Reduced from 1.25rem */
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
   overflow: hidden;
-  min-height: 120px;
+  min-height: 100px; /* Reduced from 120px */
   background: white;
   border: 2px solid var(--color-primary);
 }
@@ -42,13 +42,26 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem; /* Reduced from 0.5rem */
 }
 
 .room-card-icon {
-  font-size: 1.75rem;
+  font-size: 1.5rem; /* Reduced from 1.75rem */
   transition: all 0.2s ease;
   color: var(--color-primary);
+}
+
+/* Counter container */
+.room-counter-container {
+  display: flex;
+  align-items: center;
+}
+
+/* Counter group for - count + layout */
+.room-counter-group {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
 }
 
 /* Counter badge - always blue */
@@ -65,6 +78,8 @@
   background: var(--color-primary);
   color: white;
   box-shadow: 0 1px 3px rgba(0, 87, 255, 0.3);
+  border: none;
+  cursor: pointer;
 }
 
 .room-counter.add-button {
@@ -78,6 +93,48 @@
 .room-counter.add-button:hover {
   transform: scale(1.05);
   box-shadow: 0 2px 6px rgba(0, 87, 255, 0.4);
+}
+
+.room-counter.selected {
+  cursor: default;
+  background: var(--color-primary);
+  color: white;
+}
+
+/* Counter buttons for increment/decrement */
+.room-counter-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  font-size: 0.875rem;
+  font-weight: 700;
+  border: 2px solid var(--color-primary);
+  background: white;
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.room-counter-btn:hover {
+  background: var(--color-primary);
+  color: white;
+  transform: scale(1.05);
+}
+
+.room-counter-btn:active {
+  transform: scale(0.95);
+}
+
+.room-counter-btn.decrement {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.room-counter-btn.increment {
+  font-size: 0.875rem;
 }
 
 /* Card content */
@@ -153,16 +210,27 @@
 @media (max-width: 640px) {
   .room-card {
     padding: var(--spacing-xs);
+    min-height: 90px; /* Reduced from default */
   }
   
   .room-card-icon {
-    font-size: 1.5rem;
+    font-size: 1.25rem; /* Reduced from 1.5rem */
   }
   
   .room-counter {
     width: 1.5rem;
     height: 1.5rem;
     font-size: 0.7rem;
+  }
+  
+  .room-counter-btn {
+    width: 1.25rem;
+    height: 1.25rem;
+    font-size: 0.75rem;
+  }
+  
+  .room-counter-group {
+    gap: 0.125rem;
   }
   
   .room-card-content h4 {

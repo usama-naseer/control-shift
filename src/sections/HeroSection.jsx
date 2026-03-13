@@ -1,35 +1,42 @@
-// HeroSection.jsx - Enhanced with Custom CSS
+// HeroSection.jsx - Final Simplified Logic Implementation
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import RoomCard from '../components/RoomCard';
 import TruckVisual from '../components/TruckVisual';
-import { ROOM_TYPES } from '../data/mockData';
-import { calculateLoadEstimate } from '../utils/truckLogic';
+import { useRoomCounter } from '../hooks/useRoomCounter';
 import './HeroSection.css';
 
+// Room types configuration - final version
+const ROOM_TYPES = [
+  {
+    id: 'bedrooms',
+    label: 'Bedrooms',
+    subtitle: 'Master & Guest',
+    icon: 'bed'
+  },
+  {
+    id: 'bathrooms',
+    label: 'Bathrooms',
+    subtitle: 'Add count',
+    icon: 'bathtub'
+  },
+  {
+    id: 'homeOffice',
+    label: 'Home Office',
+    subtitle: '1 Workspace',
+    icon: 'work'
+  }
+];
+
 const HeroSection = () => {
-  const [roomCounts, setRoomCounts] = useState({
-    bedrooms: 2,
-    bathrooms: 1,
-    specialty: 1
-  });
-
-  const handleRoomSelect = (roomId) => {
-    setRoomCounts(prev => ({
-      ...prev,
-      [roomId]: prev[roomId] > 0 ? prev[roomId] : 1
-    }));
-  };
-
-  const handleCountChange = (roomId, newCount) => {
-    setRoomCounts(prev => ({
-      ...prev,
-      [roomId]: Math.max(0, newCount)
-    }));
-  };
-
-  const loadEstimate = calculateLoadEstimate(roomCounts);
+  const {
+    rooms,
+    incrementRoom,
+    decrementRoom,
+    loadData,
+    tierChanged,
+    moversCount
+  } = useRoomCounter();
 
   return (
     <div className="hero-section">
@@ -55,12 +62,27 @@ const HeroSection = () => {
               <RoomCard
                 key={room.id}
                 room={room}
-                count={roomCounts[room.id]}
-                isSelected={roomCounts[room.id] > 0}
-                onSelect={handleRoomSelect}
-                onCountChange={handleCountChange}
+                count={rooms[room.id]}
+                onIncrement={incrementRoom}
+                onDecrement={decrementRoom}
               />
             ))}
+          </div>
+          
+          {/* Summary Message - Below Room Selectors */}
+          <div className="summary-container">
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={loadData.sentence}
+                className="summary-text"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+              >
+                {loadData.sentence}
+              </motion.p>
+            </AnimatePresence>
           </div>
         </div>
       </div>
@@ -69,9 +91,8 @@ const HeroSection = () => {
       <div className="hero-visual">
         <div className="truck-visual-container">
           <TruckVisual 
-            utilizationPercent={40}
-            truckType={loadEstimate.truckType}
-            capacity={loadEstimate.capacity}
+            loadData={loadData}
+            tierChanged={tierChanged}
           />
         </div>
         
@@ -79,11 +100,18 @@ const HeroSection = () => {
           <div className="smart-match-card">
             <div className="smart-match-content">
               <div className="smart-match-icon">
-                <span className="material-symbols-outlined">verified</span>
+                <span className="material-symbols-outlined">
+                  {moversCount === 0 ? 'help' : 'verified'}
+                </span>
               </div>
               <div className="smart-match-text">
-                <h4>Smart Match Active</h4>
-                <p>3 movers suggested for this load</p>
+                <h4>{moversCount === 0 ? 'Smart Match Ready' : 'Smart Match Active'}</h4>
+                <p>
+                  {moversCount === 0 
+                    ? 'Select rooms to get mover suggestions'
+                    : `${moversCount} mover${moversCount !== 1 ? 's' : ''} suggested for this load`
+                  }
+                </p>
               </div>
             </div>
           </div>
