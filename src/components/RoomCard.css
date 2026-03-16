@@ -1,113 +1,86 @@
-/* RoomCard.css - Optimized Responsive Design */
+/* RoomCard.css */
 
 .room-card {
   display: flex;
   flex-direction: column;
-  gap: var(--gap-xs);
-  padding: 1rem; /* Reduced from 1.25rem */
+  gap: 0.5rem;
+  padding: 0.875rem;
   border-radius: var(--radius-md);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
   position: relative;
   overflow: hidden;
-  min-height: 100px; /* Reduced from 120px */
   background: white;
   border: 2px solid var(--color-primary);
+  min-height: 90px;
 }
 
-/* All cards have blue border by default */
-.room-card.default {
-  background: white;
-  border: 2px solid var(--color-primary);
-}
-
-.room-card.default:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0, 87, 255, 0.15);
-}
-
-/* Selected state - same styling but with background tint */
-.room-card.selected {
-  background: rgba(0, 87, 255, 0.02);
-  border: 2px solid var(--color-primary);
-}
-
-.room-card.selected:hover {
+.room-card:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 87, 255, 0.15);
 }
 
-/* Card header with icon and counter */
+.room-card.selected {
+  background: rgba(0, 87, 255, 0.03);
+}
+
+/* Header */
 .room-card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 0.25rem; /* Reduced from 0.5rem */
 }
 
 .room-card-icon {
-  font-size: 1.5rem; /* Reduced from 1.75rem */
-  transition: all 0.2s ease;
+  font-size: 1.375rem;
   color: var(--color-primary);
 }
 
-/* Counter container */
+/* Counter */
 .room-counter-container {
   display: flex;
   align-items: center;
 }
 
-/* Counter group for - count + layout */
 .room-counter-group {
   display: flex;
   align-items: center;
   gap: 0.25rem;
 }
 
-/* Counter badge - always blue */
 .room-counter {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 1.625rem;
+  height: 1.625rem;
   border-radius: 50%;
-  font-size: var(--text-caption);
+  font-size: 0.6875rem;
   font-weight: 700;
-  transition: all 0.2s ease;
   background: var(--color-primary);
   color: white;
   box-shadow: 0 1px 3px rgba(0, 87, 255, 0.3);
   border: none;
-  cursor: pointer;
+  cursor: default;
 }
 
 .room-counter.add-button {
-  background: var(--color-primary);
-  color: white;
   cursor: pointer;
   font-size: 0.875rem;
-  border: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .room-counter.add-button:hover {
-  transform: scale(1.05);
+  transform: scale(1.08);
   box-shadow: 0 2px 6px rgba(0, 87, 255, 0.4);
 }
 
-.room-counter.selected {
-  cursor: default;
-  background: var(--color-primary);
-  color: white;
-}
-
-/* Counter buttons for increment/decrement */
 .room-counter-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.375rem;
+  height: 1.375rem;
   border-radius: 50%;
   font-size: 0.875rem;
   font-weight: 700;
@@ -115,26 +88,17 @@
   background: white;
   color: var(--color-primary);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease;
 }
 
 .room-counter-btn:hover {
   background: var(--color-primary);
   color: white;
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
 .room-counter-btn:active {
-  transform: scale(0.95);
-}
-
-.room-counter-btn.decrement {
-  font-size: 1rem;
-  line-height: 1;
-}
-
-.room-counter-btn.increment {
-  font-size: 0.875rem;
+  transform: scale(0.94);
 }
 
 /* Card content */
@@ -142,125 +106,63 @@
   font-weight: 600;
   color: var(--color-slate-text);
   margin: 0;
-  font-size: 0.875rem;
-  transition: color 0.2s ease;
+  font-size: 0.8125rem;
 }
 
 .room-card-content p {
-  font-size: var(--text-caption);
+  font-size: 0.6875rem;
   color: var(--color-muted-text);
   margin: 0;
-  transition: color 0.2s ease;
 }
 
-/* Hover effects for text */
-.room-card:hover .room-card-content h4 {
-  color: #0f172a;
-}
-
-.room-card.selected .room-card-content h4 {
-  color: var(--color-slate-text);
-}
-
-/* Active/pressed state */
-.room-card:active {
-  transform: scale(0.98);
-}
-
-/* Focus states for accessibility */
+/* Focus */
 .room-card:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(0, 87, 255, 0.2);
 }
 
-/* Ripple effect on click */
-.room-card::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: rgba(0, 87, 255, 0.1);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: width 0.3s ease, height 0.3s ease;
-  pointer-events: none;
+/* Active press */
+.room-card:active {
+  transform: scale(0.98);
 }
 
-.room-card:active::before {
-  width: 200px;
-  height: 200px;
-}
-
-/* Specific room type styling */
-.room-card.bedrooms.selected {
-  background: rgba(0, 87, 255, 0.08);
-}
-
-.room-card.bathrooms.selected {
-  background: rgba(0, 87, 255, 0.05);
-}
-
-.room-card.office.selected {
-  background: rgba(0, 87, 255, 0.05);
-}
-
-/* Mobile responsive */
-@media (max-width: 640px) {
+/* Mobile */
+@media (max-width: 480px) {
   .room-card {
-    padding: var(--spacing-xs);
-    min-height: 90px; /* Reduced from default */
+    flex-direction: row;
+    align-items: center;
+    min-height: unset;
+    padding: 0.75rem;
+    gap: 0.75rem;
   }
-  
-  .room-card-icon {
-    font-size: 1.25rem; /* Reduced from 1.5rem */
+
+  .room-card-header {
+    flex-shrink: 0;
   }
-  
-  .room-counter {
-    width: 1.5rem;
-    height: 1.5rem;
-    font-size: 0.7rem;
+
+  .room-card-content {
+    flex: 1;
   }
-  
-  .room-counter-btn {
-    width: 1.25rem;
-    height: 1.25rem;
-    font-size: 0.75rem;
-  }
-  
-  .room-counter-group {
-    gap: 0.125rem;
-  }
-  
-  .room-card-content h4 {
-    font-size: 0.8rem;
+
+  .room-counter-container {
+    flex-shrink: 0;
   }
 }
 
-/* Dark mode support */
+/* Dark mode */
 @media (prefers-color-scheme: dark) {
-  .room-card.default {
+  .room-card {
     background: rgba(51, 65, 85, 0.5);
-    border-color: var(--color-primary);
   }
-  
+
   .room-card.selected {
     background: rgba(0, 87, 255, 0.1);
-    border-color: var(--color-primary);
   }
-  
-  .room-card-content h4 {
-    color: white;
-  }
-  
-  .room-card-content p {
-    color: #94a3b8;
-  }
-  
-  .room-counter.add-button {
+
+  .room-card-content h4 { color: white; }
+  .room-card-content p  { color: #94a3b8; }
+
+  .room-counter-btn {
     background: #334155;
-    border-color: #475569;
-    color: #94a3b8;
   }
 }

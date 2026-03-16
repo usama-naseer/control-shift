@@ -1,42 +1,16 @@
-// HeroSection.jsx - Final Simplified Logic Implementation
-
 import { motion, AnimatePresence } from 'framer-motion';
 import RoomCard from '../components/RoomCard';
 import TruckVisual from '../components/TruckVisual';
-import { useRoomCounter } from '../hooks/useRoomCounter';
 import './HeroSection.css';
 
-// Room types configuration - final version
 const ROOM_TYPES = [
-  {
-    id: 'bedrooms',
-    label: 'Bedrooms',
-    subtitle: 'Master & Guest',
-    icon: 'bed'
-  },
-  {
-    id: 'bathrooms',
-    label: 'Bathrooms',
-    subtitle: 'Add count',
-    icon: 'bathtub'
-  },
-  {
-    id: 'homeOffice',
-    label: 'Home Office',
-    subtitle: '1 Workspace',
-    icon: 'work'
-  }
+  { id: 'bedrooms',   label: 'Bedrooms',    subtitle: 'Master & Guest', icon: 'bed'    },
+  { id: 'bathrooms',  label: 'Bathrooms',   subtitle: 'Add count',      icon: 'bathtub'},
+  { id: 'homeOffice', label: 'Home Office', subtitle: '1 Workspace',    icon: 'work'   }
 ];
 
-const HeroSection = () => {
-  const {
-    rooms,
-    incrementRoom,
-    decrementRoom,
-    loadData,
-    tierChanged,
-    moversCount
-  } = useRoomCounter();
+const HeroSection = ({ roomCounter }) => {
+  const { rooms, incrementRoom, decrementRoom, loadData, tierChanged, moversCount } = roomCounter;
 
   return (
     <div className="hero-section">
