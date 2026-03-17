@@ -356,6 +356,7 @@
   text-align: right;
   /* hide number spinners */
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 .dist-edit-input::-webkit-outer-spin-button,
