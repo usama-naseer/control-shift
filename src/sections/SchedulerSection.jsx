@@ -134,12 +134,14 @@ const SchedulerSection = ({ totalRooms, scannedCount, videoAnalysed, inventoryCo
     if (viewMonth === 0) { setViewYear(y => y - 1); setViewMonth(11); }
     else setViewMonth(m => m - 1);
     setSelectedDay(null);
+    setLocked(false);
   };
 
   const nextMonth = () => {
     if (viewMonth === 11) { setViewYear(y => y + 1); setViewMonth(0); }
     else setViewMonth(m => m + 1);
     setSelectedDay(null);
+    setLocked(false);
   };
 
   const isPast = (day) => {
@@ -154,7 +156,7 @@ const SchedulerSection = ({ totalRooms, scannedCount, videoAnalysed, inventoryCo
 
   const commitDistance = () => {
     const val = parseFloat(distInput);
-    if (!isNaN(val) && val >= 0) setDistance(String(val));
+    if (!isNaN(val) && val >= 0) { setDistance(String(val)); setLocked(false); }
     else setDistInput(distance); // revert bad input
     setEditingDist(false);
   };
@@ -168,8 +170,18 @@ const SchedulerSection = ({ totalRooms, scannedCount, videoAnalysed, inventoryCo
     <section className="scheduler-section">
 
       {/* ── Calendar ── */}
-      <div className="calendar-section">
+      <motion.div
+        className="calendar-section"
+        initial={{ opacity: 0, y: 32 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      >
         <div className="calendar-header">
+          <div className="scheduler-section-badge">
+            <span className="material-symbols-outlined">calendar_month</span>
+            Schedule
+          </div>
           <h2 className="calendar-title">Schedule Concierge Call</h2>
         </div>
 
@@ -231,7 +243,7 @@ const SchedulerSection = ({ totalRooms, scannedCount, videoAnalysed, inventoryCo
                     key={t}
                     disabled={past}
                     className={`time-slot ${selectedTime === t ? 'selected' : ''} ${past ? 'past' : ''}`}
-                    onClick={() => !past && setSelectedTime(t)}
+                    onClick={() => { if (!past) { setSelectedTime(t); setLocked(false); } }}
                   >
                     {t}
                   </button>
@@ -240,177 +252,192 @@ const SchedulerSection = ({ totalRooms, scannedCount, videoAnalysed, inventoryCo
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* ── Quotation ── */}
-      <div className="quotation-section">
+      <motion.div
+        className="quotation-section"
+        initial={{ opacity: 0, y: 32 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+      >
         <div className="quotation-card">
+
+          {/* ── Header ── */}
           <div className="quotation-header">
-            <h3 className="quotation-title">Personalized Quotation</h3>
-            <p className="quotation-id">Quote ID: #CS-9901-X</p>
+            <div className="quotation-header-top">
+              <div>
+                <h3 className="quotation-title">Personalized Quote</h3>
+                <p className="quotation-subtitle">AI-calculated based on your move profile</p>
+              </div>
+              <div className="quotation-id-chip">#CS-9901-X</div>
+            </div>
+
+            {/* Summary pills */}
+            <div className="quotation-pills">
+              <div className="q-pill">
+                <span className="material-symbols-outlined">home</span>
+                <span>{totalRooms > 0 ? `${totalRooms} Room${totalRooms !== 1 ? 's' : ''}` : 'No rooms'}</span>
+              </div>
+              <div className="q-pill">
+                <span className="material-symbols-outlined">inventory_2</span>
+                <span>{scannedCount > 0 ? `${scannedCount} Items` : 'No scan'}</span>
+              </div>
+              <div className="q-pill">
+                <span className="material-symbols-outlined">distance</span>
+                <span>{distance} mi</span>
+              </div>
+            </div>
           </div>
 
           <div className="quotation-content">
-            <div className="quotation-items">
-              <div className="quotation-item">
-                <div className="quotation-item-info">
-                  <span className="material-symbols-outlined quotation-item-icon">home</span>
-                  <span className="quotation-item-label">Total Rooms</span>
-                </div>
-                <motion.span
-                  key={totalRooms}
-                  className="quotation-item-value"
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {totalRooms > 0 ? `${totalRooms} Room${totalRooms !== 1 ? 's' : ''}` : '—'}
-                </motion.span>
-              </div>
 
-              <div className="quotation-item">
-                <div className="quotation-item-info">
-                  <span className="material-symbols-outlined quotation-item-icon">inventory_2</span>
-                  <span className="quotation-item-label">Items Scanned</span>
-                </div>
-                <motion.span
-                  key={scannedCount}
-                  className="quotation-item-value"
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {scannedCount > 0 ? `${scannedCount} Items` : '—'}
-                </motion.span>
-              </div>
-
-              <div className="quotation-item">
-                <div className="quotation-item-info">
-                  <span className="material-symbols-outlined quotation-item-icon">calendar_today</span>
-                  <span className="quotation-item-label">Scheduled</span>
-                </div>
+            {/* ── Scheduled date row ── */}
+            <div className="q-date-row">
+              <span className="material-symbols-outlined q-date-icon">event</span>
+              <div className="q-date-text">
+                <span className="q-date-label">Move Date</span>
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={formattedDate + selectedTime}
-                    className="quotation-item-value"
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -6 }}
+                    className="q-date-value"
+                    initial={{ opacity: 0, x: 8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -8 }}
                     transition={{ duration: 0.2 }}
                   >
-                    {selectedDay ? `${formattedDate}, ${selectedTime}` : '—'}
+                    {selectedDay ? `${formattedDate} · ${selectedTime}` : 'Not selected'}
                   </motion.span>
                 </AnimatePresence>
               </div>
+              {cost.isWeekend && (
+                <span className="q-weekend-tag">Weekend</span>
+              )}
+            </div>
 
-              <div className="quotation-item">
-                <div className="quotation-item-info">
-                  <span className="material-symbols-outlined quotation-item-icon">distance</span>
-                  <span className="quotation-item-label">Distance</span>
-                </div>
-                {editingDist ? (
-                  <div className="dist-edit-wrap">
-                    <input
-                      className="dist-edit-input"
-                      type="number"
-                      min="0"
-                      step="0.1"
-                      value={distInput}
-                      autoFocus
-                      onChange={(e) => setDistInput(e.target.value)}
-                      onBlur={commitDistance}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') commitDistance();
-                        if (e.key === 'Escape') { setDistInput(distance); setEditingDist(false); }
-                      }}
-                    />
-                    <span className="dist-edit-unit">mi</span>
-                  </div>
-                ) : (
-                  <button className="dist-value-btn" onClick={() => { setDistInput(distance); setEditingDist(true); }}>
-                    <span className="quotation-item-value">{distance} Miles</span>
-                    <span className="material-symbols-outlined dist-edit-icon">edit</span>
-                  </button>
-                )}
-              </div>
-
-              <div className="cost-summary">
-                {/* Cost breakdown */}
-                <div className="cost-breakdown">
-                  <div className="cost-line">
-                    <span>Rooms ({totalRooms || 0} × ${RATE_PER_ROOM})</span>
-                    <span>{fmt(cost.roomCost)}</span>
-                  </div>
-                  <div className="cost-line">
-                    <span>Items ({scannedCount || 0} × ${RATE_PER_ITEM})</span>
-                    <span>{fmt(cost.itemCost)}</span>
-                  </div>
-                  <div className="cost-line">
-                    <span>Distance ({distance} mi × ${RATE_PER_MILE})</span>
-                    <span>{fmt(cost.distanceCost)}</span>
-                  </div>
-                  {cost.isWeekend && (
-                    <div className="cost-line weekend">
-                      <span>Weekend surcharge</span>
-                      <span>{fmt(cost.weekendFee)}</span>
+            {/* ── Cost breakdown bars ── */}
+            <div className="cost-bars">
+              {[
+                { label: 'Labour & Truck', detail: `${totalRooms || 0} rooms × $${RATE_PER_ROOM}`, value: cost.roomCost, icon: 'local_shipping', color: '#0057FF' },
+                { label: 'Packing Complexity', detail: `${scannedCount || 0} items × $${RATE_PER_ITEM}`, value: cost.itemCost, icon: 'inventory_2', color: '#6366f1' },
+                { label: 'Distance', detail: null, value: cost.distanceCost, icon: 'route', color: '#0ea5e9', editable: true },
+                ...(cost.isWeekend ? [{ label: 'Weekend Surcharge', detail: 'Sat/Sun rate', value: cost.weekendFee, icon: 'weekend', color: '#f59e0b' }] : []),
+                { label: 'Insurance', detail: '8% of subtotal', value: cost.insurance, icon: 'shield', color: '#2DD4BF' },
+              ].map((row) => {
+                return (
+                  <div className="cost-bar-row" key={row.label}>
+                    <div className="cost-bar-left">
+                      <span className="cost-bar-icon" style={{ color: row.color, background: `${row.color}18` }}>
+                        <span className="material-symbols-outlined">{row.icon}</span>
+                      </span>
+                      <div className="cost-bar-info">
+                        <span className="cost-bar-label">{row.label}</span>
+                        {row.editable ? (
+                          editingDist ? (
+                            <div className="dist-edit-wrap">
+                              <input
+                                className="dist-edit-input"
+                                type="number" min="0" step="0.1"
+                                value={distInput} autoFocus
+                                onChange={(e) => setDistInput(e.target.value)}
+                                onBlur={commitDistance}
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter') commitDistance();
+                                  if (e.key === 'Escape') { setDistInput(distance); setEditingDist(false); }
+                                }}
+                              />
+                              <span className="dist-edit-unit">mi</span>
+                            </div>
+                          ) : (
+                            <button className="dist-value-btn" onClick={() => { setDistInput(distance); setEditingDist(true); }}>
+                              <span className="cost-bar-detail">{distance} mi × ${RATE_PER_MILE}</span>
+                              <span className="material-symbols-outlined dist-edit-icon">edit</span>
+                            </button>
+                          )
+                        ) : (
+                          <span className="cost-bar-detail">{row.detail}</span>
+                        )}
+                      </div>
                     </div>
-                  )}
-                  <div className="cost-line">
-                    <span>Insurance (8%)</span>
-                    <span>{fmt(cost.insurance)}</span>
+                    <motion.span
+                      key={row.value}
+                      className="cost-bar-amount"
+                      initial={{ opacity: 0, y: 4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {fmt(row.value)}
+                    </motion.span>
                   </div>
-                </div>
+                );
+              })}
+            </div>
+            <div className="cost-total-block">
+              <div className="cost-total-left">
+                <span className="cost-total-label">Total Estimate</span>
+                <span className="cost-total-note">Includes 8% insurance · 48h price lock</span>
+              </div>
+              <div className="cost-total-right">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={cost.total.toFixed(0)}
+                    className="cost-total-amount"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    {fmt(cost.total)}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </div>
 
-                <div className="cost-summary-row">
-                  <span className="cost-summary-label">Estimated Cost</span>
-                  <div className="cost-summary-value">
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={cost.total.toFixed(0)}
-                        className="cost-amount"
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -8 }}
-                        transition={{ duration: 0.25 }}
-                      >
-                        {fmt(cost.total)}
-                      </motion.div>
-                    </AnimatePresence>
-                    <p className="cost-note">Includes Insurance</p>
-                  </div>
+            {/* ── Lock-in CTA ── */}
+            <div className="lock-in-section">
+              <button
+                className={`lock-in-button ${locked ? 'locked' : ''} ${!inventoryConfirmed && !locked ? 'blocked' : ''}`}
+                onClick={() => inventoryConfirmed && setLocked(true)}
+                disabled={locked || !inventoryConfirmed || totalRooms === 0}
+              >
+                {locked ? (
+                  <><span className="material-symbols-outlined">check_circle</span> Price Locked In</>
+                ) : !inventoryConfirmed ? (
+                  <><span className="material-symbols-outlined">lock</span> Confirm inventory to unlock</>
+                ) : (
+                  <><span className="material-symbols-outlined">lock_open</span> Lock-in This Price</>
+                )}
+              </button>
+
+              {!locked && (totalRooms === 0 || !videoAnalysed || !inventoryConfirmed) && (
+                <div className="lock-in-hint">
+                  <span className="material-symbols-outlined">info</span>
+                  {totalRooms === 0
+                    ? 'Select your rooms in the section above first.'
+                    : !videoAnalysed
+                      ? 'Upload and analyse a video to enable price lock.'
+                      : 'Confirm your detected items in the section above first.'
+                  }
+                </div>
+              )}
+
+              <div className="lock-in-trust">
+                <div className="trust-item">
+                  <span className="material-symbols-outlined">verified_user</span>
+                  <span>No hidden fees</span>
+                </div>
+                <div className="trust-item">
+                  <span className="material-symbols-outlined">schedule</span>
+                  <span>48h price lock</span>
+                </div>
+                <div className="trust-item">
+                  <span className="material-symbols-outlined">cancel</span>
+                  <span>Free cancellation</span>
                 </div>
               </div>
             </div>
 
-            <button
-              className={`lock-in-button ${locked ? 'locked' : ''} ${!inventoryConfirmed && !locked ? 'blocked' : ''}`}
-              onClick={() => inventoryConfirmed && setLocked(true)}
-              disabled={locked || !inventoryConfirmed || totalRooms === 0}
-              title=""
-            >
-              {locked
-                ? <><span className="material-symbols-outlined">check_circle</span> Price Locked In</>
-                : !inventoryConfirmed
-                  ? <><span className="material-symbols-outlined">lock</span> Confirm inventory to unlock</>
-                  : 'Lock-in This Price'
-              }
-            </button>
-
-            {!locked && (totalRooms === 0 || !videoAnalysed || !inventoryConfirmed) && (
-              <p className="lock-in-hint">
-                <span className="material-symbols-outlined">info</span>
-                {totalRooms === 0
-                  ? 'Select your rooms in the section above first.'
-                  : !videoAnalysed
-                    ? 'Upload and analyse a video to enable price lock.'
-                    : 'Confirm your detected items in the section above first.'
-                }
-              </p>
-            )}
-
-            <p className="price-guarantee">
-              *Price guaranteed for 48 hours based on AI scan.
-            </p>
           </div>
         </div>
 
@@ -418,7 +445,7 @@ const SchedulerSection = ({ totalRooms, scannedCount, videoAnalysed, inventoryCo
           <span className="material-symbols-outlined">shield</span>
           <span className="security-text">Secured by Smoove Protocol</span>
         </div>
-      </div>
+      </motion.div>
 
     </section>
   );

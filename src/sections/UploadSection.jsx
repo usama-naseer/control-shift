@@ -147,12 +147,22 @@ const UploadSection = ({ onScanComplete, onInventoryConfirmed, onReset }) => {
 
   return (
     <section className="upload-section">
-      <div className="upload-header">
+      <motion.div
+        className="upload-header"
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <div className="upload-section-badge">
+          <span className="material-symbols-outlined">smart_toy</span>
+          AI Inventory
+        </div>
         <h2 className="upload-title">Smart Video Inventory</h2>
         <p className="upload-description">
           Skip the manual entry. Record a quick walk-through of your home and our AI will automatically catalog every item and furniture piece.
         </p>
-      </div>
+      </motion.div>
 
       <div className="upload-content">
         {/* Left — state machine panel */}
@@ -345,30 +355,32 @@ const UploadSection = ({ onScanComplete, onInventoryConfirmed, onReset }) => {
           </AnimatePresence>
         </div>
 
-        {/* Right — static info panel */}
-        <div className="upload-info-panel">
-          <div className="info-step">
-            <div className="info-step-num">1</div>
-            <div>
-              <h4>Record a walkthrough</h4>
-              <p>Walk through each room slowly for 15–20 seconds per room.</p>
-            </div>
-          </div>
-          <div className="info-step">
-            <div className="info-step-num">2</div>
-            <div>
-              <h4>AI scans your items</h4>
-              <p>Our model detects furniture, appliances, and fragile items automatically.</p>
-            </div>
-          </div>
-          <div className="info-step">
-            <div className="info-step-num">3</div>
-            <div>
-              <h4>Confirm or edit the list</h4>
-              <p>Rename or remove any item before your move is scheduled.</p>
-            </div>
-          </div>
-        </div>
+        {/* Right — info panel with stagger */}
+        <motion.div
+          className="upload-info-panel"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-40px' }}
+          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.15, delayChildren: 0.1 } } }}
+        >
+          {[
+            { num: '1', title: 'Record a walkthrough', body: 'Walk through each room slowly for 15–20 seconds per room.' },
+            { num: '2', title: 'AI scans your items',  body: 'Our model detects furniture, appliances, and fragile items automatically.' },
+            { num: '3', title: 'Confirm or edit the list', body: 'Rename or remove any item before your move is scheduled.' },
+          ].map((step) => (
+            <motion.div
+              key={step.num}
+              className="info-step"
+              variants={{ hidden: { opacity: 0, x: 24 }, show: { opacity: 1, x: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } } }}
+            >
+              <div className="info-step-num">{step.num}</div>
+              <div>
+                <h4>{step.title}</h4>
+                <p>{step.body}</p>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );

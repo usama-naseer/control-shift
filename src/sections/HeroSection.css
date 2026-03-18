@@ -4,14 +4,14 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--gap-lg);
-  padding: var(--spacing-xl) var(--padding-mobile);
+  padding: 2rem var(--padding-mobile);
   max-width: var(--container-xl);
   margin: 0 auto;
 }
 
 @media (min-width: 768px) {
   .hero-section {
-    padding: var(--spacing-xl) var(--padding-tablet);
+    padding: 2.5rem var(--padding-tablet);
   }
 }
 
@@ -19,7 +19,7 @@
   .hero-section {
     grid-template-columns: 7fr 5fr;
     align-items: start;
-    padding: var(--spacing-2xl) var(--padding-desktop);
+    padding: 3rem var(--padding-desktop);
     gap: var(--gap-xl);
   }
 }
@@ -48,7 +48,9 @@
 }
 
 .hero-badge {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   width: fit-content;
   background: rgba(0, 87, 255, 0.08);
   color: var(--color-primary);
@@ -58,7 +60,20 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  animation: fadeInUp 0.5s ease-out both;
+  border: 1px solid rgba(0, 87, 255, 0.15);
+}
+
+.hero-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.75); }
 }
 
 .hero-headline {
@@ -67,12 +82,14 @@
   line-height: 1.1;
   color: var(--color-slate-text);
   font-family: var(--font-display);
-  animation: fadeInUp 0.6s ease-out 0.1s both;
   margin: 0;
 }
 
 .hero-headline-accent {
-  color: var(--color-primary);
+  background: linear-gradient(135deg, #0057FF 0%, #2DD4BF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .hero-description {
@@ -80,7 +97,6 @@
   font-size: var(--text-lg);
   line-height: 1.65;
   color: var(--color-muted-text);
-  animation: fadeInUp 0.6s ease-out 0.2s both;
   margin: 0;
 }
 
@@ -94,7 +110,6 @@
   border-radius: var(--radius-lg);
   padding: 1.25rem;
   box-shadow: var(--shadow-md);
-  animation: fadeInUp 0.6s ease-out 0.3s both;
 }
 
 .room-selector-title {
@@ -102,6 +117,23 @@
   font-weight: 600;
   color: var(--color-slate-text);
   margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.375rem;
+  height: 1.375rem;
+  background: var(--color-primary);
+  color: white;
+  border-radius: 50%;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  flex-shrink: 0;
 }
 
 .room-grid {
@@ -137,14 +169,8 @@
 
 /* Truck container */
 .truck-visual-container {
-  animation: fadeInRight 0.7s ease-out 0.4s both;
   width: 100%;
   overflow: hidden;
-}
-
-/* Smart Match Card */
-.smart-match-container {
-  animation: fadeInRight 0.7s ease-out 0.5s both;
 }
 
 .smart-match-card {

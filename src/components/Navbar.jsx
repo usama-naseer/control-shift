@@ -24,7 +24,7 @@ export default function Navbar() {
     <header className={`navbar${scrolled ? ' scrolled' : ''}`}>
       <div className="navbar-container">
         {/* Logo */}
-        <a href="#" className="navbar-logo">
+        <a href="#" className="navbar-logo" onClick={(e) => { e.preventDefault(); window.location.reload(); }}>
           <div className="navbar-logo-icon">
             <span className="material-symbols-outlined">move_item</span>
           </div>
@@ -41,7 +41,7 @@ export default function Navbar() {
         {/* Desktop Actions */}
         <div className="navbar-actions">
           <button className="navbar-login-btn">Login</button>
-          <button className="navbar-cta-btn">Get Started</button>
+          <button className="navbar-cta-btn" onClick={() => window.location.reload()}>Get Started</button>
         </div>
 
         {/* Mobile Hamburger */}
@@ -65,7 +65,7 @@ export default function Navbar() {
           <a href="#" className="navbar-mobile-link" onClick={() => setMenuOpen(false)}>Pricing</a>
           <div className="navbar-mobile-actions">
             <button className="navbar-login-btn">Login</button>
-            <button className="navbar-cta-btn">Get Started</button>
+            <button className="navbar-cta-btn" onClick={() => window.location.reload()}>Get Started</button>
           </div>
         </div>
       )}
