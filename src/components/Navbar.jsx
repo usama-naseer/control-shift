@@ -1,11 +1,11 @@
-// Navbar.jsx - With mobile hamburger menu
-
 import { useState, useEffect } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -13,59 +13,54 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Close menu on resize to desktop
   useEffect(() => {
     const onResize = () => { if (window.innerWidth >= 768) setMenuOpen(false); };
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
+  const close = () => setMenuOpen(false);
+
   return (
     <header className={`navbar${scrolled ? ' scrolled' : ''}`}>
       <div className="navbar-container">
-        {/* Logo */}
-        <a href="#" className="navbar-logo" onClick={(e) => { e.preventDefault(); window.location.reload(); }}>
+
+        <NavLink to="/" className="navbar-logo" onClick={() => window.location.href = '/'}>
           <div className="navbar-logo-icon">
             <span className="material-symbols-outlined">move_item</span>
           </div>
           <span className="navbar-logo-text">Control Shift</span>
-        </a>
+        </NavLink>
 
-        {/* Desktop Nav Links */}
         <nav className="navbar-nav">
-          <a href="#" className="navbar-nav-link">How it Works</a>
-          <a href="#" className="navbar-nav-link">Services</a>
-          <a href="#" className="navbar-nav-link">Pricing</a>
+          <NavLink to="/"             className={({ isActive }) => `navbar-nav-link${isActive ? ' active' : ''}`} end>Home</NavLink>
+          <NavLink to="/how-it-works" className={({ isActive }) => `navbar-nav-link${isActive ? ' active' : ''}`}>How it Works</NavLink>
+          <NavLink to="/services"     className={({ isActive }) => `navbar-nav-link${isActive ? ' active' : ''}`}>Services</NavLink>
+          <NavLink to="/pricing"      className={({ isActive }) => `navbar-nav-link${isActive ? ' active' : ''}`}>Pricing</NavLink>
         </nav>
 
-        {/* Desktop Actions */}
         <div className="navbar-actions">
-          <button className="navbar-login-btn">Login</button>
-          <button className="navbar-cta-btn" onClick={() => window.location.reload()}>Get Started</button>
+          <button className="navbar-cta-btn" onClick={() => window.location.href = '/'}>Get Started</button>
         </div>
 
-        {/* Mobile Hamburger */}
         <button
           className={`navbar-menu-toggle${menuOpen ? ' open' : ''}`}
           onClick={() => setMenuOpen(o => !o)}
           aria-label="Toggle menu"
           aria-expanded={menuOpen}
         >
-          <span />
-          <span />
-          <span />
+          <span /><span /><span />
         </button>
       </div>
 
-      {/* Mobile Dropdown */}
       {menuOpen && (
         <div className="navbar-mobile-menu">
-          <a href="#" className="navbar-mobile-link" onClick={() => setMenuOpen(false)}>How it Works</a>
-          <a href="#" className="navbar-mobile-link" onClick={() => setMenuOpen(false)}>Services</a>
-          <a href="#" className="navbar-mobile-link" onClick={() => setMenuOpen(false)}>Pricing</a>
+          <NavLink to="/"             className="navbar-mobile-link" onClick={close} end>Home</NavLink>
+          <NavLink to="/how-it-works" className="navbar-mobile-link" onClick={close}>How it Works</NavLink>
+          <NavLink to="/services"     className="navbar-mobile-link" onClick={close}>Services</NavLink>
+          <NavLink to="/pricing"      className="navbar-mobile-link" onClick={close}>Pricing</NavLink>
           <div className="navbar-mobile-actions">
-            <button className="navbar-login-btn">Login</button>
-            <button className="navbar-cta-btn" onClick={() => window.location.reload()}>Get Started</button>
+            <button className="navbar-cta-btn" onClick={() => window.location.href = '/'}>Get Started</button>
           </div>
         </div>
       )}

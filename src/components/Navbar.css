@@ -111,8 +111,13 @@
   color: var(--color-primary);
 }
 
-.navbar-nav-link:hover::after {
+.navbar-nav-link:hover::after,
+.navbar-nav-link.active::after {
   width: 100%;
+}
+
+.navbar-nav-link.active {
+  color: var(--color-primary);
 }
 
 /* Desktop Actions */
