@@ -1,11 +1,20 @@
 import { useState, useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import './Navbar.css';
+
+function goHome() {
+  // With HashRouter, navigate to #/ then reload to reset all state
+  if (window.location.hash === '#/' || window.location.hash === '') {
+    window.location.reload();
+  } else {
+    window.location.hash = '/';
+    window.location.reload();
+  }
+}
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -25,12 +34,13 @@ export default function Navbar() {
     <header className={`navbar${scrolled ? ' scrolled' : ''}`}>
       <div className="navbar-container">
 
-        <NavLink to="/" className="navbar-logo" onClick={() => window.location.href = '/'}>
+        {/* Logo — always reloads/goes home */}
+        <a className="navbar-logo" onClick={(e) => { e.preventDefault(); goHome(); }} href="/" style={{ cursor: 'pointer' }}>
           <div className="navbar-logo-icon">
             <span className="material-symbols-outlined">move_item</span>
           </div>
           <span className="navbar-logo-text">Control Shift</span>
-        </NavLink>
+        </a>
 
         <nav className="navbar-nav">
           <NavLink to="/"             className={({ isActive }) => `navbar-nav-link${isActive ? ' active' : ''}`} end>Home</NavLink>
@@ -40,7 +50,7 @@ export default function Navbar() {
         </nav>
 
         <div className="navbar-actions">
-          <button className="navbar-cta-btn" onClick={() => window.location.href = '/'}>Get Started</button>
+          <button className="navbar-cta-btn" onClick={goHome}>Get Started</button>
         </div>
 
         <button
@@ -60,7 +70,7 @@ export default function Navbar() {
           <NavLink to="/services"     className="navbar-mobile-link" onClick={close}>Services</NavLink>
           <NavLink to="/pricing"      className="navbar-mobile-link" onClick={close}>Pricing</NavLink>
           <div className="navbar-mobile-actions">
-            <button className="navbar-cta-btn" onClick={() => window.location.href = '/'}>Get Started</button>
+            <button className="navbar-cta-btn" onClick={() => { close(); goHome(); }}>Get Started</button>
           </div>
         </div>
       )}
