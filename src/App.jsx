@@ -8,7 +8,6 @@ import SchedulerSection from './sections/SchedulerSection';
 import SectionWrapper from './components/SectionWrapper';
 import HowItWorks from './pages/HowItWorks';
 import Services from './pages/Services';
-import Pricing from './pages/Pricing';
 import { useRoomCounter } from './hooks/useRoomCounter';
 
 function HomePage() {
@@ -56,7 +55,6 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/services" element={<Services />} />
-        <Route path="/pricing" element={<Pricing />} />
       </Routes>
       <Footer />
     </div>

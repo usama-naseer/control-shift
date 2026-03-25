@@ -3,12 +3,25 @@ import { NavLink } from 'react-router-dom';
 import './Navbar.css';
 
 function goHome() {
-  // With HashRouter, navigate to #/ then reload to reset all state
   if (window.location.hash === '#/' || window.location.hash === '') {
     window.location.reload();
   } else {
     window.location.hash = '/';
     window.location.reload();
+  }
+}
+
+function scrollToQuote(close) {
+  if (close) close();
+  // If not on home, go home first then scroll after load
+  if (window.location.hash !== '#/' && window.location.hash !== '') {
+    window.location.hash = '/';
+    // Small delay to let React render the home page
+    setTimeout(() => {
+      document.getElementById('quote-calculator')?.scrollIntoView({ behavior: 'smooth' });
+    }, 300);
+  } else {
+    document.getElementById('quote-calculator')?.scrollIntoView({ behavior: 'smooth' });
   }
 }
 
@@ -46,7 +59,7 @@ export default function Navbar() {
           <NavLink to="/"             className={({ isActive }) => `navbar-nav-link${isActive ? ' active' : ''}`} end>Home</NavLink>
           <NavLink to="/how-it-works" className={({ isActive }) => `navbar-nav-link${isActive ? ' active' : ''}`}>How it Works</NavLink>
           <NavLink to="/services"     className={({ isActive }) => `navbar-nav-link${isActive ? ' active' : ''}`}>Services</NavLink>
-          <NavLink to="/pricing"      className={({ isActive }) => `navbar-nav-link${isActive ? ' active' : ''}`}>Pricing</NavLink>
+          <button className="navbar-nav-link" onClick={() => scrollToQuote(null)}>Pricing</button>
         </nav>
 
         <div className="navbar-actions">
@@ -68,7 +81,7 @@ export default function Navbar() {
           <NavLink to="/"             className="navbar-mobile-link" onClick={close} end>Home</NavLink>
           <NavLink to="/how-it-works" className="navbar-mobile-link" onClick={close}>How it Works</NavLink>
           <NavLink to="/services"     className="navbar-mobile-link" onClick={close}>Services</NavLink>
-          <NavLink to="/pricing"      className="navbar-mobile-link" onClick={close}>Pricing</NavLink>
+          <button className="navbar-mobile-link" onClick={() => scrollToQuote(close)}>Pricing</button>
           <div className="navbar-mobile-actions">
             <button className="navbar-cta-btn" onClick={() => { close(); goHome(); }}>Get Started</button>
           </div>

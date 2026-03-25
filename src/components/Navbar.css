@@ -94,6 +94,11 @@
   position: relative;
   transition: color 0.2s ease;
   white-space: nowrap;
+  /* reset button styles when used as <button> */
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
 }
 
 .navbar-nav-link::after {
@@ -241,6 +246,13 @@
   padding: 0.625rem 0.5rem;
   border-radius: var(--radius-sm);
   transition: background 0.15s ease, color 0.15s ease;
+  /* reset button styles */
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  width: 100%;
+  text-align: left;
 }
 
 .navbar-mobile-link:hover {

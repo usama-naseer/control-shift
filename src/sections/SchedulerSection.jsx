@@ -167,7 +167,7 @@ const SchedulerSection = ({ totalRooms, scannedCount, videoAnalysed, inventoryCo
   }), [totalRooms, scannedCount, distance, selectedDay, viewYear, viewMonth]);
 
   return (
-    <section className="scheduler-section">
+    <section className="scheduler-section" id="quote-calculator">
 
       {/* ── Calendar ── */}
       <motion.div
