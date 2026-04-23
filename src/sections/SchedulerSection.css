@@ -772,6 +772,16 @@
     border-color: #334155;
   }
 
+  .dist-edit-input {
+    background: #1e293b;
+    color: var(--color-slate-text);
+    border-color: var(--color-primary);
+  }
+
+  .dist-value-btn:hover {
+    background: #334155;
+  }
+
   .cost-total-block {
     background: linear-gradient(135deg, rgba(0,87,255,0.1) 0%, rgba(14,165,233,0.1) 100%);
     border-color: rgba(0,87,255,0.2);
