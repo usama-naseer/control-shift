@@ -33,7 +33,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   font-weight: 700;
   line-height: 1.2;
-  color: var(--color-slate-text);
+  color: var(--color-slate-text); /* resolves to near-white in dark mode via tokens.css */
 }
 
 img, svg, video {

@@ -137,7 +137,7 @@
 }
 
 .browse-button {
-  background: var(--color-slate-text);
+  background: var(--color-primary);
   color: white;
   border: none;
   padding: 0.5625rem 1.625rem;
@@ -145,12 +145,14 @@
   font-weight: 700;
   font-size: 0.875rem;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.15s ease;
+  box-shadow: var(--shadow-primary);
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
 }
 
 .browse-button:hover {
-  background: #334155;
+  background: var(--color-primary-hover);
   transform: translateY(-1px);
+  box-shadow: 0 8px 18px -4px rgba(0, 87, 255, 0.35);
 }
 
 .hidden-input { display: none; }
@@ -639,4 +641,46 @@
   color: var(--color-muted-text);
   line-height: 1.55;
   margin: 0;
+}
+
+/* Dark mode overrides */
+@media (prefers-color-scheme: dark) {
+  .upload-zone {
+    border-color: #334155;
+    background: var(--color-dark-card);
+  }
+
+  .upload-zone.results {
+    background: var(--color-dark-card);
+  }
+
+  .upload-icon {
+    background: #1e293b;
+  }
+
+  .add-item-input,
+  .badge-edit-input {
+    background: #1e293b;
+    color: var(--color-slate-text);
+    border-color: var(--color-primary);
+  }
+
+  .add-item-btn {
+    border-color: #475569;
+    color: #94a3b8;
+  }
+
+  .reset-button {
+    border-color: #475569;
+    color: #94a3b8;
+  }
+
+  .upload-progress-bar {
+    background: #334155;
+  }
+
+  .spinner {
+    border-color: #334155;
+    border-top-color: var(--color-primary);
+  }
 }

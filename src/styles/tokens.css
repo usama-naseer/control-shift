@@ -68,3 +68,15 @@
   --shadow-xl:      0 20px 25px -5px rgb(0 0 0 / 0.08), 0 8px 10px -6px rgb(0 0 0 / 0.04);
   --shadow-primary: 0 8px 20px -4px rgb(0 87 255 / 0.3);
 }
+
+/* Dark mode token overrides — ensures all var(--color-slate-text) headings stay readable */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-slate-text:       #F1F5F9;   /* near-white for dark backgrounds */
+    --color-muted-text:       #94A3B8;
+    --color-background-light: #0F1723;
+    --color-border:           #334155;
+    --color-border-light:     #1E293B;
+    --color-dark-card:        #0F172A;
+  }
+}

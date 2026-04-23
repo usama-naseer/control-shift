@@ -1,7 +1,7 @@
 /* TruckVisual.css */
 
 .truck-visual {
-  background: var(--color-slate-text);
+  background: #1E293B;
   border-radius: var(--radius-lg);
   padding: 1.5rem 1.25rem 1.25rem;
   color: white;
@@ -168,7 +168,7 @@
   width: 1.125rem;
   height: 1.125rem;
   background: #475569;
-  border: 3px solid var(--color-slate-text);
+  border: 3px solid #1E293B;
   border-radius: 50%;
 }
 

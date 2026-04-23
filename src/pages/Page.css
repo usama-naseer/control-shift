@@ -463,3 +463,28 @@
   margin-top: 2.5rem;
   font-style: italic;
 }
+
+/* Dark mode overrides for pages */
+@media (prefers-color-scheme: dark) {
+  .page-wrapper {
+    background: var(--color-background-light);
+  }
+
+  .service-card,
+  .pricing-card {
+    background: var(--color-dark-card);
+    border-color: #334155;
+  }
+
+  .service-features {
+    border-top-color: #334155;
+  }
+
+  .step-big-num {
+    color: #475569;
+  }
+
+  .step-connector {
+    background: linear-gradient(to bottom, #334155, transparent);
+  }
+}

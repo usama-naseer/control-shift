@@ -715,7 +715,7 @@
 
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
-  .calendar-title { color: white; }
+  .calendar-title { color: var(--color-slate-text); }
 
   .calendar-widget,
   .quotation-card {
@@ -725,17 +725,21 @@
 
   .calendar-month-title,
   .quotation-item-value,
-  .cost-summary-label { color: white; }
+  .cost-summary-label,
+  .cost-bar-label,
+  .cost-total-label,
+  .q-date-value,
+  .time-slots-title { color: var(--color-slate-text); }
 
-  .quotation-item-label,
-  .time-slots-title { color: #94a3b8; }
+  .quotation-item-label { color: #94a3b8; }
 
-  .calendar-day.active { color: white; }
+  .calendar-day.active { color: var(--color-slate-text); }
   .calendar-day.active:hover { background: #334155; }
 
   .calendar-nav-button {
     background: #334155;
     border-color: #475569;
+    color: var(--color-slate-text);
   }
 
   .calendar-nav-button:hover { background: #475569; }
@@ -744,5 +748,20 @@
     background: #334155;
     border-color: #475569;
     color: #e2e8f0;
+  }
+
+  .q-date-row {
+    background: #1e293b;
+    border-color: #334155;
+  }
+
+  .cost-total-block {
+    background: linear-gradient(135deg, rgba(0,87,255,0.1) 0%, rgba(14,165,233,0.1) 100%);
+    border-color: rgba(0,87,255,0.2);
+  }
+
+  .lock-in-button.blocked {
+    background: #334155;
+    color: #64748b;
   }
 }

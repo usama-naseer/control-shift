@@ -241,11 +241,15 @@
   .hero-headline,
   .room-selector-title,
   .smart-match-text h4 {
-    color: white;
+    color: var(--color-slate-text);
   }
 
   .hero-description,
   .smart-match-text p {
     color: #94a3b8;
+  }
+
+  .summary-container {
+    border-top-color: #334155;
   }
 }
